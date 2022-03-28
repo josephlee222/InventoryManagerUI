@@ -4,11 +4,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import {QueryClient, QueryClientProvider} from 'react-query'
 
+const queryClient = new QueryClient()
 ReactDOM.render(
   <StrictMode>
-    <ColorModeScript />
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <ColorModeScript />
+      <App />
+    </QueryClientProvider>
   </StrictMode>,
   document.getElementById('root')
 );

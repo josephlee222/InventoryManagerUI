@@ -10,7 +10,6 @@ export default function Navbar(props) {
     var isAdmin = props.isAdmin
 
     var navbarItems = isAdmin ? ["Home", "Profile", "Settings", "Admin"] : ["Home", "Profile", "Settings"]
-    console.log(navbarItems)
     const {isOpen, onOpen, onClose} = useDisclosure()
 
     return (

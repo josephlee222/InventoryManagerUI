@@ -11,10 +11,10 @@ import {
     Alert,
     AlertIcon,
 } from '@chakra-ui/react';
-import FormInput from './components/FormInput';
+import FormInput from '../components/FormInput';
 import { FaKey, FaUser } from 'react-icons/fa';
 
-import { loginUser } from './api/Auth';
+import { loginUser } from '../api/Auth';
 
 function Home() {
     const [loading, setLoading] = useState(false)

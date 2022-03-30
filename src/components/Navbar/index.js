@@ -6,10 +6,9 @@ import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 
 
 export default function Navbar(props) {
-    var isLoggedIn = props.isLoggedIn
-    var isAdmin = props.isAdmin
+    var type = props.type
 
-    var navbarItems = isAdmin ? ["Home", "Profile", "Settings", "Admin"] : ["Home", "Profile", "Settings"]
+    var navbarItems = type == "admin" ? ["Home", "Profile", "Settings", "Admin"] : type == "normal" ? ["Home", "Profile", "Settings"] : []
     const {isOpen, onOpen, onClose} = useDisclosure()
 
     return (

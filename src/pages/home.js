@@ -15,12 +15,14 @@ import FormInput from '../components/FormInput';
 import { FaKey, FaUser } from 'react-icons/fa';
 
 import { loginUser } from '../api/Auth';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
 
     function handleUsernameChange(input) {
         setUsername(input)
@@ -40,6 +42,8 @@ function Home() {
             // Successful login
             setLoading(false)
             localStorage.setItem("user", JSON.stringify(data.result))
+            
+            navigate("dashboard")
             }
         }).catch((error) => {
             if (error.response.status === 401) {

@@ -49,7 +49,7 @@ function Dashboard() {
                     <Input placeholder={"Search for places"} onChange={(event) => {handleSearchInput(event.target.value)}} isDisabled={!places}/>
                 </InputGroup>
             </Box>
-            <SimpleGrid columns={[1, null, 4]} spacing='1rem'>
+            <SimpleGrid columns={{base: 1, md: 2, xl: 4}} spacing='1rem'>
                 {!places && <Skeleton h={"256px"} w={"100%"}/>}
                 {!places && <Skeleton h={"256px"} w={"100%"}/>}
                 {!places && <Skeleton h={"256px"} w={"100%"}/>}

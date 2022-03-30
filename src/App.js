@@ -26,6 +26,8 @@ function App() {
       } else {
         setNavbarState("normal")
       }
+    } else {
+      setNavbarState("guest")
     }
   }
 

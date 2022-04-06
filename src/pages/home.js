@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 
 import {
-    ChakraProvider,
     Box,
     Text,
-    theme,
     Container,
     Button,
     Progress,

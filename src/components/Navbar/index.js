@@ -1,7 +1,21 @@
 // Navbar component
 
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { Box, Flex, Button, IconButton, useDisclosure, HStack, VStack, Avatar, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { 
+    Box,
+    Flex, 
+    Button, 
+    IconButton, 
+    useDisclosure, 
+    HStack, 
+    VStack, 
+    Avatar, 
+    Menu, 
+    MenuButton, 
+    MenuList, 
+    MenuItem, 
+    MenuDivider 
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { getLocalUser, logoutUser } from "../../api/Auth";
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
@@ -32,7 +46,7 @@ export default function Navbar(props) {
                         </MenuButton>
                         <MenuList>
                             <MenuItem>Profile</MenuItem>
-                            <MenuItem color={"red"} onClick={() => {logoutUser()}}>Logout</MenuItem>
+                            <MenuItem color={"red"} onClick={() => {logoutUser(); navigate("/")}}>Logout</MenuItem>
                             {type == "admin" && <>
                                 <MenuDivider/>
                                 <MenuItem>Admin Settings</MenuItem>

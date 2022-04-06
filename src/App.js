@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import {
   ChakraProvider,
   theme,
@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/home';
 import Dashboard from './pages/dashboard';
 import { getLocalUser } from './api/Auth';
+import Place from './pages/place';
 
 function App() {
   const [navbarState, setNavbarState] = useState("guest")
@@ -36,8 +37,10 @@ function App() {
       <Navbar type={navbarState}/>
       <div className="App">
         <Routes>
-          <Route path="/" element={ <Home/> } />
-          <Route path="dashboard" element={ <Dashboard/> } />
+          <Route exact path="/" element={ <Home/> } />
+          <Route exact path="dashboard" element={ <Dashboard/> } />
+          <Route exact path="place/" element={ <Place/> }/>
+          <Route exact path="place/:id" element={ <Place/> }/>
         </Routes>
       </div>
     </ChakraProvider>

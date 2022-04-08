@@ -52,8 +52,6 @@ function Place() {
         )
     }
 
-    console.log(areas)
-
     return (
         <Box mx={{base: "1rem", md: "5%"}}>
             <Flex mb={"1rem"} alignItems="center">
@@ -90,8 +88,8 @@ function Place() {
                                         <Menu>
                                             <MenuButton as={IconButton} icon={<FaEllipsisV/>}/>
                                             <MenuList>
-                                                <MenuItem key={"editPlace"}>Edit</MenuItem>
-                                                <MenuItem color={'red'} key={"deletePlace"}>Delete</MenuItem>
+                                                <MenuItem key={"editArea"}>Edit</MenuItem>
+                                                <MenuItem color={'red'} key={"deleteArea"}>Delete</MenuItem>
                                             </MenuList>
                                         </Menu>
                                     </Box>

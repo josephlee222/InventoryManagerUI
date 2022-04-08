@@ -16,19 +16,37 @@ import {
     MenuItem, 
     MenuDivider 
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getLocalUser, logoutUser } from "../../api/Auth";
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 
 
-export default function Navbar(props) {
-    const type = props.type
+export default function Navbar() {
+    const [type, setType] = useState(null)
     const isLoggedIn = type == "admin" || type == "normal"
-
     const navbarItems = type == "admin" ? [["Home", "dashboard"], ["Profile", "profile"], ["Settings", "settings"], ["Admin", "admin"]] : type == "normal" ? [["Home", "dashboard"], ["Profile", "profile"], ["Settings", "settings"]] : []
     const {isOpen, onOpen, onClose} = useDisclosure()
     const user = isLoggedIn ? getLocalUser() : null
     const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        checkAuthState()
+    }, [location])
+
+    function checkAuthState() {
+        const user = getLocalUser()
+        if (user) {
+        if (user.admin === 1) {
+            setType("admin")
+        } else {
+            setType("normal")
+        }
+        } else {
+        setType("guest")
+        }
+    }
 
     return (
         <>

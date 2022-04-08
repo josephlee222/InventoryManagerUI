@@ -51,6 +51,8 @@ function Dashboard() {
             }
         )
     }
+
+    document.title = "Dashboard - InventoryManager"
     
     return (
         <Box mx={{base: "1rem", md: "5%"}}>

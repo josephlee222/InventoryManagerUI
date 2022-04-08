@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/home';
 import Dashboard from './pages/dashboard';
 import Place from './pages/place';
+import Area from './pages/area';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
             <Route path="dashboard" element={ <Dashboard/> } />
             <Route path="/place/" element={ <Place/> }/>
             <Route path="/place/:id" element={ <Place/> }/>
+            <Route path="/area/" element={ <Area/> }/>
+            <Route path="/area/:id" element={ <Area/> }/>
           </Routes>
         </div>
       </BrowserRouter>

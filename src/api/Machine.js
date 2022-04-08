@@ -3,7 +3,7 @@ import { getLocalUser } from "./Auth";
 
 const baseUrl = process.env.REACT_APP_API_ADDRESS
 
-export async function getMachines(sort, limit, search) {
+export async function getMachines(areaId, sort, limit, search) {
     sort = (typeof sort !== 'undefined') ?  sort : "desc"
     limit = (typeof limit !== 'undefined') ?  limit : 50
     search = (typeof search !== 'undefined') ?  search : ""
@@ -12,7 +12,7 @@ export async function getMachines(sort, limit, search) {
         headers: { Authorization: `Bearer ${token}` }
     };
 
-    const data = axios.get(baseUrl + "/machine.php?sort=" + sort + "&limit=" + limit, config).then(Response => {return Response.data})
+    const data = axios.get(baseUrl + "/machine.php?area=" + areaId + "&sort=" + sort + "&limit=" + limit, config).then(Response => {return Response.data})
     return data
 }
 
@@ -22,7 +22,7 @@ export function getMachine(id) {
         headers: { Authorization: `Bearer ${token}` }
     };
 
-    const promise = axios.get(baseUrl + "/machine.php?id=" + id, config)
+    const promise = axios.get(baseUrl + "/machine.php?area=" + id, config)
     const data = promise.then(Response => {return Response.data})
     return data
 }

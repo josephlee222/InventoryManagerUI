@@ -30,6 +30,7 @@ function Home() {
         setPassword(input)
     }
 
+    document.title = "Login - InventoryManager"
     function login() {
         if (username && password) {
         setLoading(true)

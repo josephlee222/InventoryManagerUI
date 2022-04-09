@@ -12,8 +12,8 @@ import {
 import FormInput from '../components/FormInput';
 import { FaKey, FaUser } from 'react-icons/fa';
 
-import { loginUser } from '../api/Auth';
-import { useNavigate } from 'react-router-dom';
+import { getLocalUser, loginUser } from '../api/Auth';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Home() {
     const [loading, setLoading] = useState(false)
@@ -21,6 +21,10 @@ function Home() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
+
+    if (getLocalUser() != false) {
+        return <Navigate to={"dashboard"}/>
+    }
 
     function handleUsernameChange(input) {
         setUsername(input)

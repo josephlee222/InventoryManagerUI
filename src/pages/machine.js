@@ -12,31 +12,34 @@ import {
     MenuButton, 
     MenuList, 
     MenuItem, 
-    Menu } from '@chakra-ui/react';
+    Menu, 
+    useDisclosure} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { getLocalUser } from '../api/Auth';
-import { getArea } from '../api/Area';
-import { getMachines } from '../api/Machine';
+import { getMachine } from '../api/Machine';
+import { getParts } from '../api/Part';
+import SimpleDialog from '../components/SimpleDialog';
 
-function Area() {
+function Machine() {
     const { id } = useParams()
-    const [ area , setArea ] = useState(false)
-    const [ machines, setMachines ] = useState(false)
+    const [ machine , setMachine ] = useState(false)
+    const [ parts, setParts ] = useState(false)
     const navigate = useNavigate()
+    const { onOpen, onClose, isOpen } = useDisclosure()
 
     if (!getLocalUser()) {
         return <Navigate to={"/"}/>
     }
 
     if (!id) {
-        alert("Invaild area ID")
+        alert("Invaild machine ID")
     }
 
-    if (!area) {
-        getArea(id).then(
+    if (!machine) {
+        getMachine(id).then(
             (data) => {
-                setArea(data.result[0])
+                setMachine(data.result[0])
             }
         ).catch(
             (error) => {
@@ -49,10 +52,10 @@ function Area() {
         )
     }
 
-    if (!machines) {
-        getMachines(id).then(
+    if (!parts) {
+        getParts(id).then(
             (data) => {
-                setMachines(data.result)
+                setParts(data.result)
             }
         ).catch(
             (error) => {
@@ -65,46 +68,49 @@ function Area() {
         )
     }
 
-    document.title =  area.name + " - InventoryManager"
+    document.title =  machine.name + " - InventoryManager"
 
     return (
         <Box mx={{base: "1rem", md: "5%"}}>
             <Flex mb={"1rem"} alignItems="center">
                 <IconButton icon={<FaAngleLeft/>} size="lg" mr="1rem" onClick={() => {navigate(-1)}}/>
-                <Text fontSize="4xl" fontWeight={"bold"}>Area</Text>
+                <Text fontSize="4xl" fontWeight={"bold"}>Machine</Text>
             </Flex>
             <Grid gap={4} templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)"}}>
                 <GridItem colSpan={1}>
                     <Box borderRadius={"lg"} borderWidth="1px" width={"100%"} p={"1rem"}>
                         {/* Skeleton elements */}
-                        <Skeleton isLoaded={area} mb="0.5rem">
-                            <Text fontWeight={"bold"} fontSize={"xl"} w="100%">{area && area.name}</Text>
+                        <Skeleton isLoaded={machine} mb="0.5rem">
+                            <Text fontWeight={"bold"} fontSize={"xl"} w="100%">{machine && machine.name}</Text>
                         </Skeleton>
-                        <SkeletonText isLoaded={area} noOfLines={4}>
-                            <Text>{area && area.description}</Text>
+                        <SkeletonText isLoaded={machine} noOfLines={4}>
+                            <Text>{machine && machine.description}</Text>
                         </SkeletonText>
                     </Box>
                 </GridItem>
                 <GridItem colSpan={{base: 1, md: 2, lg: 3}}>
-                    {!machines && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
-                    {!machines && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
-                    {!machines && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
-                    {!machines && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
-                    {machines && machines.map(item => {
+                    {!parts && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
+                    {!parts && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
+                    {!parts && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
+                    {!parts && <Skeleton h={"96px"} w={"100%"} mb="1rem"/>}
+                    {parts && parts.map(item => {
                         return (
                             <Box borderRadius={"lg"} borderWidth="1px" width={"100%"} height={"96px"} p={"1rem"} mb="0.5rem">
                                 <Flex alignItems={"center"} h="100%">
                                     <Box flexGrow={1}>
                                         <Text fontWeight={"bold"}>{item.name}</Text>
-                                        <Text>Machine (Placeholder)</Text>
+                                        <Text color={item.days_until_best_before < 1 ? "red" : ""}>
+                                            Part | {item.days_until_best_before < 1 ? "Part Expired" : "Expires on " + item.best_before_date}
+                                        </Text>
                                     </Box>
                                     <Box>
-                                        <Button mr={"0.5rem"} onClick={() => navigate("../machine/" + item.id)}>View</Button>
+                                        <Button mr={"0.5rem"} onClick={onOpen}>Renew</Button>
                                         <Menu>
                                             <MenuButton as={IconButton} icon={<FaEllipsisV/>}/>
                                             <MenuList>
-                                                <MenuItem key={"editMachine"}>Edit</MenuItem>
-                                                <MenuItem color={'red'} key={"deleteMachine"}>Delete</MenuItem>
+                                                <MenuItem key={"viewPartTemplate"}>View Part Template</MenuItem>
+                                                <MenuItem key={"editPart"}>Edit</MenuItem>
+                                                <MenuItem color={'red'} key={"deletePart"}>Delete</MenuItem>
                                             </MenuList>
                                         </Menu>
                                     </Box>
@@ -112,11 +118,12 @@ function Area() {
                             </Box>
                         )
                     })}
-                    {machines.length == 0 && <Text w={"100%"} fontWeight="bold" textAlign="center">No machines available</Text>}
+                    {parts.length === 0 && <Text w={"100%"} fontWeight="bold" textAlign="center">No parts inside</Text>}
                 </GridItem>
             </Grid>
+            <SimpleDialog title="Renew part?" description="Renew the part and reset the expiry date?" isOpen={isOpen} onClose={onClose} confirmText="Renew"/>
         </Box>
     )
 }
 
-export default Area
+export default Machine

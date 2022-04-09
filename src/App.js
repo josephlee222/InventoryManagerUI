@@ -10,6 +10,7 @@ import Home from './pages/home';
 import Dashboard from './pages/dashboard';
 import Place from './pages/place';
 import Area from './pages/area';
+import Machine from './pages/machine';
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
             <Route path="/place/:id" element={ <Place/> }/>
             <Route path="/area/" element={ <Area/> }/>
             <Route path="/area/:id" element={ <Area/> }/>
+            <Route path="/machine/" element={ <Machine/> }/>
+            <Route path="/machine/:id" element={ <Machine/> }/>
           </Routes>
         </div>
       </BrowserRouter>

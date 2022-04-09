@@ -36,7 +36,6 @@ function Dashboard() {
     }
 
     if (!places) {
-        console.log("A")
         getPlaces().then(
             (data) => {
                 setPlaces(data.result)
